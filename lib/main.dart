@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'select_gender_widget.dart';
+import 'text_filed_on_class.dart';
 import 'weather_home_screen.dart';
 
 enum Gender { male, female, other }
@@ -35,13 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // body: Center(
-      //   child: Container(
-      //     padding: const EdgeInsets.all(16),
-      //     child: const SelectGenderWidget(),
-      //   ),
-      // ),
-      body: SelectGenderWidget(),
+      body: TextFieldOnClassWidget(),
     );
   }
 }
