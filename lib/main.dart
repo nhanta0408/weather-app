@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
+import 'scrollable_list_view_on_class.dart';
 import 'select_gender_widget.dart';
 import 'text_filed_on_class.dart';
 import 'weather_home_screen.dart';
@@ -35,8 +37,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: TextFieldOnClassWidget(),
+    return Scaffold(
+      body: HomeScreen(),
     );
   }
 }
