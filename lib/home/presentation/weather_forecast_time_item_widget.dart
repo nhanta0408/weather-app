@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'int_ext.dart';
+import '../../extension/int_ext.dart';
 
 class WeatherForecastTimeItemWidget extends StatelessWidget {
   final int hour;

@@ -1,8 +1,7 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-import 'models/weather_city.dart';
+import '../../models/weather_city.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -25,14 +24,14 @@ class HomeScreen extends StatelessWidget {
       city: 'New York City',
       time: DateTime.now(),
       weatherDesc: 'Peace Night',
-      status: WeatherStatus.sunny,
+      status: WeatherStatus.rain,
       temperature: 12,
     ),
     WeatherCity(
       city: 'London City',
       time: DateTime.now(),
       weatherDesc: 'Peace Night',
-      status: WeatherStatus.sunny,
+      status: WeatherStatus.rain,
       temperature: 6,
     ),
     WeatherCity(
@@ -49,29 +48,74 @@ class HomeScreen extends StatelessWidget {
       status: WeatherStatus.sunny,
       temperature: 7,
     ),
+    WeatherCity(
+      city: 'Paris City',
+      time: DateTime.now(),
+      weatherDesc: 'Peace Night',
+      status: WeatherStatus.sunny,
+      temperature: 7,
+    ),
+    WeatherCity(
+      city: 'Paris City',
+      time: DateTime.now(),
+      weatherDesc: 'Peace Night',
+      status: WeatherStatus.sunny,
+      temperature: 7,
+    ),
   ];
+
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: weatherCities.length,
-      itemBuilder: (context, index) {
-        return _buildItem(weatherCities[index]);
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(
-          height: 8,
-        );
-      },
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.separated(
+            controller: _scrollController,
+            itemCount: weatherCities.length,
+            itemBuilder: (context, index) {
+              return _buildItem(weatherCities[index]);
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(
+                height: 8,
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: ElevatedButton(
+            onPressed: () {
+              // Scroll to top
+              _scrollController.animateTo(
+                0,
+                duration: const Duration(seconds: 1),
+                curve: Curves.linear,
+              );
+            },
+            child: const Text('Scroll To Top'),
+          ),
+        ),
+      ],
     );
   }
 
-  Container _buildItem(WeatherCity weatherCity) {
+  Widget _buildItem(WeatherCity weatherCity) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.blue[400],
+        image: DecorationImage(
+          fit: BoxFit.fitWidth,
+          image: AssetImage(
+            weatherCity.status == WeatherStatus.sunny
+                ? 'assets/images/bg.png'
+                : 'assets/images/bg_night.png',
+          ),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,9 +128,15 @@ class HomeScreen extends StatelessWidget {
                 weatherCity.city,
                 style: const TextStyle(fontSize: 20),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Text(
                 formatDate(weatherCity.time, [h, ':', nn]),
                 style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Text(
                 weatherCity.weatherDesc,
@@ -106,8 +156,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Text(
                 '${weatherCity.temperature.toStringAsFixed(0)}°C',
-                style:
-                    const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 36),
               ),
             ],
           ),
