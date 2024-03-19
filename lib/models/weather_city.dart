@@ -3,15 +3,15 @@ enum WeatherStatus { sunny, rain }
 
 class WeatherCity {
   String city;
-  DateTime time;
+  DateTime? time;
   String weatherDesc;
-  WeatherStatus status;
+  WeatherStatus? status;
   double temperature;
   WeatherCity({
     required this.city,
-    required this.time,
+    this.time,
     required this.weatherDesc,
-    required this.status,
+    this.status,
     required this.temperature,
   });
 }

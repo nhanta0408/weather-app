@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
+import 'detail/presentation/weather_detail_screen.dart';
 import 'home/presentation/home_screen.dart';
-import 'onclass/grid_view_widget.dart';
+import 'models/weather_city.dart';
 
 enum Gender { male, female, other }
 
@@ -25,24 +26,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white)),
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFF1E1E1E),
-      body: GridViewWidget(),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/': // trang mặc định, home
+            return MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            );
+          case '/detail': // trang detail
+            final arg = settings.arguments as WeatherCity?; // ép kiểu
+            return MaterialPageRoute(
+              builder: (context) => WeatherDetailScreen(
+                weatherCityData: arg,
+              ),
+            );
+        }
+        return null;
+      },
+      home: HomeScreen(),
     );
   }
 }
